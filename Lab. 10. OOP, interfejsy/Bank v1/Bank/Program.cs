@@ -6,7 +6,9 @@ namespace Bank
     {
         static void Main(string[] args)
         {
-            Test3();
+            Test1();
+            Test2();
+            Test3();    
         }
         static void Test1()
         {

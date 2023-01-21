@@ -6,7 +6,7 @@ namespace Bank
     {
         // nazwa klienta, bez spacji przed i po
         // readonly - modyfikowalna wyłącznie w konstruktorze
-        string Name { get; }
+        string? Name { get; }
 
         // bilans, aktualny stan środków, podawany w zaokrągleniu do 2 miejsc po przecinku
         decimal Balance { get; }
