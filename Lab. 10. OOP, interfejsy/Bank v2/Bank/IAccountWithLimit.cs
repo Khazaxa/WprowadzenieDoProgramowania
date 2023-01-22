@@ -1,9 +1,9 @@
-﻿using System;
-
-
-namespace Bank
+﻿namespace Bank
 {
-    internal interface IAccountWithLimit
+    interface IAccountWithLimit : IAccount
     {
+        decimal OneTimeDebetLimit { get; set; }
+
+        new bool Withdrawal(decimal amount);
     }
 }
