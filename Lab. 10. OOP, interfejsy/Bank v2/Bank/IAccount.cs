@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace Bank
 {
     public interface IAccount

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 interface IFigure
 {
@@ -103,40 +104,62 @@ class Program
 
     static void Main(string[] args)
     {
-        int t = int.Parse(Console.ReadLine());
-        for (int i = 0; i < t; i++)
+        try
         {
-            int n = int.Parse(Console.ReadLine());
-            List<IFigure> figures = new List<IFigure>();
-            for (int j = 0; j < n; j++)
+
+            int? t = int.Parse(Console.ReadLine());
+            
+            while (t-- > 0)
             {
-                string[] line = Console.ReadLine().Split();
-                char type = char.Parse(line[0]);
-                switch (type)
+                int n = int.Parse(Console.ReadLine());
+                int xMin = int.MaxValue;
+                int yMin = int.MaxValue;
+                int xMax = int.MinValue;
+                int yMax = int.MinValue;
+
+                for (int i = 0; i < n; i++)
                 {
-                    case 'p':
-                        int x = int.Parse(line[1]);
-                        int y = int.Parse(line[2]);
-                        figures.Add(new Point(x, y));
-                        break;
-                    case 'c':
-                        int centerX = int.Parse(line[1]);
-                        int centerY = int.Parse(line[2]);
-                        int radius = int.Parse(line[3]);
-                        figures.Add(new Circle(new Point(centerX, centerY), radius));
-                        break;
-                    case 'l':
-                        int startX = int.Parse(line[1]);
-                        int startY = int.Parse(line[2]);
-                        int endX = int.Parse(line[3]);
-                        int endY = int.Parse(line[4]);
-                        figures.Add(new Line(new Point(startX, startY), new Point(endX, endY)));
-                        break;
+                    string[] input = Console.ReadLine().Split();
+                    char type = char.Parse(input[0]);
+                    int x = int.Parse(input[1]);
+                    int y = int.Parse(input[2]);
+
+                    if (type == 'p')
+                    {
+                        xMin = Math.Min(xMin, x);
+                        yMin = Math.Min(yMin, y);
+                        xMax = Math.Max(xMax, x);
+                        yMax = Math.Max(yMax, y);
+                    }
+                    else if (type == 'c')
+                    {
+                        int r = int.Parse(input[3]);
+                        xMin = Math.Min(xMin, x - r);
+                        yMin = Math.Min(yMin, y - r);
+                        xMax = Math.Max(xMax, x + r);
+                        yMax = Math.Max(yMax, y + r);
+                    }
+                    else if (type == 'l')
+                    {
+                        int x2 = int.Parse(input[3]);
+                        int y2 = int.Parse(input[4]);
+                        xMin = Math.Min(xMin, Math.Min(x, x2));
+                        yMin = Math.Min(yMin, Math.Min(y, y2));
+                        xMax = Math.Max(xMax, Math.Max(x, x2));
+                        yMax = Math.Max(yMax, Math.Max(y, y2));
+                    }
                 }
+
+                Console.WriteLine("{0} {1} {2} {3}", xMin, yMin, xMax, yMax);
             }
-            Rectangle mbr = MinimumBoundingRectangle(figures);
-            Console.WriteLine(mbr.LowerLeft.X + " " + mbr.LowerLeft.Y + " " + mbr.UpperRight.X + " " + mbr.UpperRight.Y);
+             
         }
+        catch
+        {
+            Console.WriteLine("Value cannot be null.");
+        }
+        
+
 
     }
 }

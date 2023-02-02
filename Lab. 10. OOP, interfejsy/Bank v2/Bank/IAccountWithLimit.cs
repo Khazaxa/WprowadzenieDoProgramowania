@@ -1,9 +1,13 @@
-﻿namespace Bank
+﻿
+namespace Bank
 {
-    interface IAccountWithLimit : IAccount
+    public interface IAccountWithLimit : IAccount
     {
+        // przyznany limit debetowy
+        // mozliwość zmiany, jeśli konto nie jest zablokowane
         decimal OneTimeDebetLimit { get; set; }
 
-        new bool Withdrawal(decimal amount);
+        // dostępne środki, z uwzględnieniem limitu
+        decimal AvaibleFounds { get; }
     }
 }
